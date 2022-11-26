@@ -28,11 +28,12 @@ public class DemoController {
                 .credential(new DefaultAzureCredentialBuilder().build())
                 .buildClient();
 
-        String secretName = "test";
-        String secretValue = "8081";
-        System.out.print("Creating a secret in " + keyVaultName + " called '" + secretName + "' with value '" + secretValue + " ... \n");
-        secretClient.setSecret(new KeyVaultSecret(secretName, secretValue));
-        return "connectionString";
+//        String secretName = "test";
+//        String secretValue = "8081";
+//        System.out.print("Creating a secret in " + keyVaultName + " called '" + secretName + "' with value '" + secretValue + " ... \n");
+//        secretClient.setSecret(new KeyVaultSecret(secretName, secretValue));
+        KeyVaultSecret key = secretClient.getSecret("test");
+        return key.getValue();
     }
 
 }
