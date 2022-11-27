@@ -32,6 +32,12 @@ public class DemoController {
     @PostMapping("/token")
     public ResponseEntity<TokenResponse> token(@RequestBody UserDto user) {
         TokenResponse tokenResponse = getUserAccessToken(user.getUsername(), user.getPassword());
+        String tokenValue = tokenResponse.getAccess_token();
+        SecretClient secretClient = new SecretClientBuilder()
+                .vaultUrl("https://pokeshop-key-vault.vault.azure.net")
+                .credential(new DefaultAzureCredentialBuilder().build())
+                .buildClient();
+        secretClient.setSecret("access-token", tokenValue);
         return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
     }
 
